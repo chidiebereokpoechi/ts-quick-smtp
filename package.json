@@ -1,8 +1,8 @@
 {
   "name": "ts-quick-smtp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Barebones smtp server in TypeScript",
-  "main": "build/server.js",
+  "main": "lib/server.js",
   "scripts": {
     "test": "jest",
     "format": "prettier --write \"src/**/*.ts\"",
