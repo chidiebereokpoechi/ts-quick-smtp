@@ -1,0 +1,42 @@
+{
+  "name": "ts-quick-smtp",
+  "version": "1.0.0",
+  "description": "Barebones smtp server in TypeScript",
+  "main": "build/server.js",
+  "scripts": {
+    "test": "jest",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json",
+    "build": "tsc",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "keywords": [
+    "smtp",
+    "server",
+    "node",
+    "typescript"
+  ],
+  "author": "Chidiebere Okpoechi",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@types/jest": "^26.0.9",
+    "@types/node": "^14.0.27",
+    "@types/nodemailer": "^6.4.0",
+    "jest": "^26.2.2",
+    "nodemailer": "^6.4.11",
+    "prettier": "^2.0.5",
+    "ts-jest": "^26.1.4",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.9.7"
+  },
+  "jest": {
+    "preset": "ts-jest"
+  },
+  "files": [
+    "lib/**/*"
+  ]
+}
