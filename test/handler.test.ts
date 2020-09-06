@@ -5,15 +5,15 @@ describe('handler', () => {
     const command_1 = Buffer.from('HELO [localhost]')
     const command_2 = Buffer.from('EHLO [localhost]')
 
-    expect(Handler.respond_to_directive(command_1)).toBe(HELLO_RESPONSE)
-    expect(Handler.respond_to_directive(command_2)).toBe(HELLO_RESPONSE)
+    expect(Handler.respond(command_1)).toBe(HELLO_RESPONSE)
+    expect(Handler.respond(command_2)).toBe(HELLO_RESPONSE)
   })
 
   it('should respond to a MAIL FROM command correctly', () => {
     const sender = 'person@mail.com'
     const command = Buffer.from(`MAIL FROM: ${sender}`)
 
-    expect(Handler.respond_to_directive(command)).toBe(OK_RESPONSE)
+    expect(Handler.respond(command)).toBe(OK_RESPONSE)
     expect(Handler.mail.from).toBe(sender)
   })
 
@@ -23,14 +23,14 @@ describe('handler', () => {
 
     recipients.map((recipient) => {
       const command = Buffer.from(`RCPT TO: ${recipient}`)
-      expect(Handler.respond_to_directive(command)).toBe(OK_RESPONSE)
+      expect(Handler.respond(command)).toBe(OK_RESPONSE)
       expect(Handler.mail.recipients).toContain(recipient)
     })
   })
 
   it('should respond to a DATA command correctly', () => {
     const command = Buffer.from('DATA')
-    expect(Handler.respond_to_directive(command)).toBe(SEND_MESSAGE_CONTENT_RESPONSE)
+    expect(Handler.respond(command)).toBe(SEND_MESSAGE_CONTENT_RESPONSE)
   })
 
   it('should save the data supplied correctly', () => {
@@ -41,7 +41,7 @@ describe('handler', () => {
       .
     `)
 
-    expect(Handler.respond_to_directive(command)).toBe(OK_RESPONSE)
+    expect(Handler.respond(command)).toBe(OK_RESPONSE)
     expect(command.toString()).toContain(Handler.mail.raw_content)
   })
 })
