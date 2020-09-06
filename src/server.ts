@@ -1,8 +1,8 @@
 import { AddressInfo, Server } from 'net'
 import { Handler } from './handler'
-import { generate_response, ResponseCode } from './response'
+import { generateResponse, ResponseCode } from './response'
 
-export const start_mail_server = (port: number = 2525): void => {
+export const startServer = (port: number = 2525): void => {
   const server = new Server()
 
   server.listen(process.env.PORT ?? port, async () => {
@@ -11,7 +11,7 @@ export const start_mail_server = (port: number = 2525): void => {
   })
 
   server.on('connection', (socket) => {
-    const greeting = generate_response(
+    const greeting = generateResponse(
       ResponseCode.READY,
       `ts-quick-smtp ${new Date().toISOString()}`,
     )
@@ -21,9 +21,11 @@ export const start_mail_server = (port: number = 2525): void => {
 
     socket.on('data', (buffer) => {
       Handler.log(buffer, true)
-      const response = Buffer.from(Handler.respond_to_directive(buffer))
+      const response = Buffer.from(Handler.respond(buffer))
       Handler.log(response)
       socket.write(Buffer.from(response))
     })
   })
 }
+
+export default startServer

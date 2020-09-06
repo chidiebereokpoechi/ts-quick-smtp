@@ -1,7 +1,7 @@
 import { Mail } from './mail'
 import {
   BYE_RESPONSE,
-  generate_response,
+  generateResponse,
   HELLO_RESPONSE,
   OK_RESPONSE,
   ResponseCode,
@@ -13,7 +13,7 @@ export class Handler {
   private static expecting_data: boolean = false
   public static mail: Mail = new Mail()
 
-  public static respond_to_directive(buffer: Buffer): string {
+  public static respond(buffer: Buffer): string {
     const directive = buffer.toString('utf8').trimRight()
 
     if (this.expecting_data) {
@@ -24,7 +24,7 @@ export class Handler {
         return OK_RESPONSE
       }
 
-      return generate_response(ResponseCode.UNEXPECTED_LINE, 'unterminated data')
+      return generateResponse(ResponseCode.UNEXPECTED_LINE, 'unterminated data')
     }
 
     switch (directive.toUpperCase().slice(0, 4)) {
